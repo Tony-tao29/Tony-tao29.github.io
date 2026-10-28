@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tesla OAuth 回调</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 2rem auto; padding: 0 1rem; line-height: 1.5; }
+    code, pre { background: #f4f4f5; padding: 0.2rem 0.4rem; border-radius: 4px; word-break: break-all; }
+    pre { padding: 1rem; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>授权回调</h1>
+  <p>请把下面的 <strong>code</strong> 发给 Halo（不要发整个链接也可以，只发 code 即可）。</p>
+  <pre id="out">正在读取…</pre>
+  <script>
+    const p = new URLSearchParams(location.search);
+    const code = p.get('code');
+    const state = p.get('state');
+    const err = p.get('error');
+    const desc = p.get('error_description');
+    const el = document.getElementById('out');
+    if (err) {
+      el.textContent = '错误: ' + err + (desc ? '\n' + desc : '');
+    } else if (code) {
+      el.textContent = 'code:\n' + code + (state ? '\n\nstate:\n' + state : '');
+    } else {
+      el.textContent = '未找到 code。完整查询参数:\n' + location.search;
+    }
+  </script>
+</body>
+</html>
